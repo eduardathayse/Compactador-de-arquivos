@@ -5,17 +5,19 @@ def SelecionarArquivos():
 		if preencher_nome == "ok":
 			return
 	else:
-		filepath = root.filename = filedialog.askopenfilenames(initialdir="./",title="Selecione",filetypes=(("pdf","*.pdf"),("texto","*.txt"),("all files","*.*")))
+		filepath = root.filename = filedialog.askopenfilenames(initialdir="./",title="Selecione",filetypes=(("pdf","*.pdf"),("docx","*.docx"),("doc","*.doc"),("texto","*.txt"),("all files","*.*")))
 		if filepath == "":
 			nenhum_selecionado = messagebox.showwarning("Alerta","Nenhum arquivo selecionado!")
 			if nenhum_selecionado == "ok":
 				return
 		else:
+			# userhome = os.path.expanduser('~') # pegar o diretório pessoal do usuário (variavel de ambiente home)
+			# os.chdir(userhome) # indo para o caminho do usuário
 			for i in filepath:
-				filezip = zipfile.ZipFile(entrynome.get() + combobox_ext.get(), 'a') # Cria um novo arquivo ZIP.
+				filezip = zipfile.ZipFile(entrynome.get() + combobox_ext.get(), 'a') # Cria um novo arquivo ZIP.  "Documents/" 
 				filezip.write (i, compress_type=zipfile.ZIP_DEFLATED) # adiciona o arquivo ao ZIP.
 				filezip.close()
-				print(i)
+				# print(i)
 	entrynome.delete(0,END) # limpando o entrynome
 
 
@@ -25,11 +27,15 @@ try:
 	from tkinter import messagebox
 	from tkinter import ttk
 	import zipfile
+	import os
 
 	# ----------- Start bot -----------------------------------------------------------------------------------
 	root = Tk()
 	root.title("Compactador")
-	# root.iconbitmap("ico_bot.ico")
+	try:
+		root.iconbitmap("ico_bot.ico")
+	except:
+		pass
 	root.configure(bg="#C0C0C0")
 	root.resizable(False,False) 
 	# root.geometry("750x500") # WxH
